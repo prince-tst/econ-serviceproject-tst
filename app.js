@@ -1,0 +1,14 @@
+const express = require("express");
+const dotenv = require("dotenv").config();
+const app = express();
+const port = process.env.PORT;
+const userRoutes = require("./user/userRoutes");
+const errorHandler = require("./middleware/errorHandler");
+const adminRoutes = require('./adminRoutes');
+app.use(express.json());
+const syncModels = require("./config/syncFunction");
+syncModels();
+app.use("/user", userRoutes);
+app.use("/admin",adminRoutes);
+app.use(errorHandler);
+app.listen(port, () => console.log(`Server started on ${port}!`));
