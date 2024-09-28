@@ -43,9 +43,6 @@ module.exports = UserModel = sequelize.define(
     },
   },
   {
-    hooks: {
-      beforeCreate: () => {},
-      afterCreate: () => {},
-    },
+    paranoid: true,
   }
 );

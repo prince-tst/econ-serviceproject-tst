@@ -31,6 +31,11 @@ const errorHandler = (err, req, res, next) => {
       status: 400,
       message: "User Not Found",
     });
+  } else if (err.name === "SequelizeDatabaseError") {
+    res.status(400).json({
+      status: 400,
+      message: "Something went Wrong in database",
+    });
   } else {
     res.status(err.status || 500).json({
       status: err.status || 500,

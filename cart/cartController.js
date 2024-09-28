@@ -8,12 +8,8 @@ const { sequelize } = require("../config/dbConnect");
 const cartServices = require("./cartServices");
 const getOrCreateCart = async (req, res, next) => {
   try {
-    if (flag === 1) {
-      res.status(404).json({ message: "Your cart is checkout" });
-    } else {
-      const cart = await cartServices.getOrCreateCart(req.userId);
-      res.status(200).json(cart);
-    }
+    const cart = await cartServices.getOrCreateCart(req.userId);
+    res.status(200).json(cart);
   } catch (error) {
     next(error);
   }
@@ -151,12 +147,14 @@ const checkout = async (req, res, next) => {
     // Update the order with the correct total amount
     order.totalAmount = totalAmount;
     await order.save({ transaction });
-
-    // Clear the cart after checkout TODO
-    flag = 1;
-
     // Commit the transaction
     await transaction.commit();
+
+    //Updated Flag Value TODO:Discuss with Jay Bhai
+    await cartItemsModel.update(
+      { isOrdered: true }, // set isOrdered to true
+      { where: { userId: req.userid, isOrdered: false } } // filter by user and non-ordered items
+    );
 
     return res.status(200).json({ message: "Checkout successful", order });
   } catch (error) {

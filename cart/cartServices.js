@@ -8,6 +8,7 @@ const getOrCreateCart = async (userId) => {
       {
         model: cartItemsModel,
         as: "items",
+        where: { flag: false }, //flag condition
         include: [
           {
             model: productModel,

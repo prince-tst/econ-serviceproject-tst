@@ -9,10 +9,14 @@ const cartItemsModel = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
+    flag: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   },
   { timestamps: false }
 );
-cartModel.hasMany(cartItemsModel, { as: "items" , foreignKey: "cartId" });
+cartModel.hasMany(cartItemsModel, { as: "items", foreignKey: "cartId" });
 cartItemsModel.belongsTo(cartModel);
 productModel.hasMany(cartItemsModel);
 cartItemsModel.belongsTo(productModel);
