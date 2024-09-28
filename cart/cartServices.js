@@ -34,29 +34,27 @@ const getOrCreateCart = async (userId) => {
   if (cart.items && cart.items.length > 0) {
     cart.items.sort((a, b) => b.id - a.id);
   }
-  return {cart,totalPrice};
+  return { cart, totalPrice };
 };
 const addItemToCart = async (userId, productId, quantity) => {
   let cart = await cartModel.findOne({ where: { userId } });
 
+  // Create a new cart if it doesn't exist
   if (!cart) {
     cart = await cartModel.create({ userId });
   }
 
+  // Check if the cart item already exists for this product
   let cartItem = await cartItemsModel.findOne({
     where: { cartId: cart.id, productId },
   });
 
-  // Create a new cart item with a new id when updating quantity
   if (cartItem) {
-    // Create a new entry for the updated quantity
-    const newQuantity = cartItem.quantity + Number(quantity);
-    cartItem = await cartItemsModel.create({
-      cartId: cart.id,
-      productId,
-      quantity: newQuantity,
-    });
+    // Update the quantity of the existing cart item
+    cartItem.quantity += Number(quantity);
+    await cartItem.save(); // Save the updated cart item
   } else {
+    // Create a new cart item if it doesn't exist
     cartItem = await cartItemsModel.create({
       cartId: cart.id,
       productId,
