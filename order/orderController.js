@@ -1,13 +1,18 @@
-const orderService = require('./orderService');
+const orderService = require("./orderService");
 const createOrder = async (req, res, next) => {
   try {
     const { productId, quantity, paymentMethod } = req.body;
     const userId = req.userId;
 
-    const result = await orderService.createOrder(userId, productId, quantity, paymentMethod);
+    const result = await orderService.createOrder(
+      userId,
+      productId,
+      quantity,
+      paymentMethod
+    );
 
     res.status(201).json({
-      message: "Order and payment created successfully"
+      message: "Order and payment created successfully",
     });
   } catch (error) {
     next(error);
@@ -27,7 +32,9 @@ const updateOrder = async (req, res, next) => {
   try {
     const { orderId, status } = req.body;
     const updatedOrder = await orderService.updateOrderStatus(orderId, status);
-    res.status(200).json({ message: "Order updated successfully", order: updatedOrder });
+    res
+      .status(200)
+      .json({ message: "Order updated successfully", order: updatedOrder });
   } catch (error) {
     next(error);
   }
