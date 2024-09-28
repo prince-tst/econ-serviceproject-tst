@@ -7,8 +7,7 @@ const createOrder = async (req, res, next) => {
     const result = await orderService.createOrder(userId, productId, quantity, paymentMethod);
 
     res.status(201).json({
-      message: "Order and payment created successfully",
-      ...result,
+      message: "Order and payment created successfully"
     });
   } catch (error) {
     next(error);
