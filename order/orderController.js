@@ -1,8 +1,4 @@
-const orderItemsModel = require("./orderItemsModel");
-const orderModel = require("./orderModel");
-const paymentModel = require("../payment/paymentModel");
-const productModel = require("../product/productModel");
-const { sequelize } = require("../config/dbConnect");
+const orderService = require('./orderService');
 const createOrder = async (req, res, next) => {
   try {
     const { productId, quantity, paymentMethod } = req.body;

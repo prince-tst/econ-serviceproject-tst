@@ -3,7 +3,7 @@ const productModel = require("../product/productModel");
 const trasactionModel = require("../transaction/transactionModel");
 const orderItemsModel = require("./orderItemsModel");
 const orderModel = require("./orderModel");
-
+const { sequelize } = require("../config/dbConnect");
 // Create a new order
 
 const createOrder = async (userId, productId, quantity, paymentMethod) => {
