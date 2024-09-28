@@ -52,7 +52,7 @@ const addItemToCart = async (userId, productId, quantity) => {
   if (cartItem) {
     // Update the quantity of the existing cart item
     cartItem.quantity += Number(quantity);
-    await cartItem.save(); // Save the updated cart item
+    await cartItem.save();
   } else {
     // Create a new cart item if it doesn't exist
     cartItem = await cartItemsModel.create({
@@ -72,7 +72,7 @@ const addItemToCart = async (userId, productId, quantity) => {
         include: [
           {
             model: productModel,
-            attributes: ["id", "productName", "price"], // Include product details
+            attributes: ["id", "productName", "price"],
           },
         ],
       },
