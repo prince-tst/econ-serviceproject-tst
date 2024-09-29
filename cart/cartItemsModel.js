@@ -11,6 +11,7 @@ const cartItemsModel = sequelize.define(
     },
     flag: {
       type: DataTypes.BOOLEAN,
+      allowNull: false,
       defaultValue: false,
     },
   },

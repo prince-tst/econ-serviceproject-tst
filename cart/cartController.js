@@ -4,8 +4,10 @@ const cartModel = require("./cartModel");
 const productModel = require("../product/productModel");
 const orderModel = require("../order/orderModel");
 const orderItemsModel = require("../order/orderItemsModel");
+const createError = require("http-errors");
 const { sequelize } = require("../config/dbConnect");
 const cartServices = require("./cartServices");
+const { where } = require("sequelize");
 const getOrCreateCart = async (req, res, next) => {
   try {
     const cart = await cartServices.getOrCreateCart(req.userId);
@@ -98,6 +100,7 @@ const checkout = async (req, res, next) => {
         {
           model: cartItemsModel,
           as: "items",
+          where: { flag: false },
           include: [
             {
               model: productModel,
@@ -147,15 +150,20 @@ const checkout = async (req, res, next) => {
     // Update the order with the correct total amount
     order.totalAmount = totalAmount;
     await order.save({ transaction });
-    // Commit the transaction
-    await transaction.commit();
 
     //Updated Flag Value TODO:Discuss with Jay Bhai
     await cartItemsModel.update(
-      { isOrdered: true }, // set isOrdered to true
-      { where: { userId: req.userid, isOrdered: false } } // filter by user and non-ordered items
+      { flag: true }, // set flag to true
+      {
+        where: { flag: false, cartId: cart.id },
+        include: [
+          { model: cartModel, as: "cart", where: { userId: req.userId } },
+        ],
+      }
     );
 
+    // Commit the transaction
+    await transaction.commit();
     return res.status(200).json({ message: "Checkout successful", order });
   } catch (error) {
     await transaction.rollback();
