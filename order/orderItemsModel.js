@@ -1,8 +1,5 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConnect");
-const orderModel = require("./orderModel");
-const cartItemsModel = require("../cart/cartItemsModel");
-
 const orderItemsModel = sequelize.define("orderItems", {
   id: {
     type: DataTypes.INTEGER,
@@ -13,14 +10,13 @@ const orderItemsModel = sequelize.define("orderItems", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: "Pending",
+  },
   price: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false,
   },
 });
-orderModel.hasMany(orderItemsModel);
-orderItemsModel.belongsTo(orderModel);
-
-cartItemsModel.hasOne(orderItemsModel);
-orderItemsModel.belongsTo(cartItemsModel);
 module.exports = orderItemsModel;

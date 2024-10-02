@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConnect");
-
-module.exports = UserModel = sequelize.define(
+const userModel = sequelize.define(
   "user",
   {
     id: {
@@ -46,3 +45,4 @@ module.exports = UserModel = sequelize.define(
     paranoid: true,
   }
 );
+module.exports = userModel;

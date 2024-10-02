@@ -1,8 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConnect");
-const userModel = require("../user/userModel");
-
-const trasactionModel = sequelize.define("transaction", {
+const transactionModel = sequelize.define("transaction", {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -17,6 +15,4 @@ const trasactionModel = sequelize.define("transaction", {
     allowNull: false,
   },
 });
-userModel.hasMany(trasactionModel);
-trasactionModel.belongsTo(userModel);
-module.exports = trasactionModel;
+module.exports = transactionModel;

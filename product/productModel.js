@@ -1,8 +1,5 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConnect");
-const categoryModel = require("../category/categoryModel");
-const cartItemsModel = require("../cart/cartItemsModel");
-cartItemsModel;
 const productModel = sequelize.define("product", {
   id: {
     type: DataTypes.INTEGER,
@@ -23,6 +20,4 @@ const productModel = sequelize.define("product", {
     allowNull: false,
   },
 });
-categoryModel.hasMany(productModel);
-productModel.belongsTo(categoryModel);
 module.exports = productModel;

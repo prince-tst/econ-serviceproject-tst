@@ -13,6 +13,7 @@ const createOrder = async (req, res, next) => {
 
     res.status(201).json({
       message: "Order and payment created successfully",
+      result,
     });
   } catch (error) {
     next(error);
@@ -40,6 +41,21 @@ const updateOrder = async (req, res, next) => {
   }
 };
 
+const updateOrderItem = async (req, res, next) => {
+  try {
+    const { orderId, status } = req.body;
+    const updatedOrder = await orderService.updateOrderItemStatus(
+      orderId,
+      status
+    );
+    res
+      .status(200)
+      .json({ message: "Order updated successfully", order: updatedOrder });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const deleteOrder = async (req, res, next) => {
   try {
     const { orderId } = req.body;
@@ -54,5 +70,6 @@ module.exports = {
   createOrder,
   getOrders,
   updateOrder,
+  updateOrderItem,
   deleteOrder,
 };

@@ -6,6 +6,8 @@ const errorHandler = require("./middleware/errorHandler");
 const mainRoutes = require("./index");
 app.use(express.json());
 const syncModels = require("./config/syncFunction");
+const relations = require("./config/relations");
+relations();
 syncModels();
 app.use("/api", mainRoutes);
 app.use(errorHandler);
