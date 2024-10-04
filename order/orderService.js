@@ -1,6 +1,5 @@
 const paymentModel = require("../payment/paymentModel");
 const productModel = require("../product/productModel");
-const trasactionModel = require("../transaction/transactionModel");
 const orderItemsModel = require("./orderItemsModel");
 const orderModel = require("./orderModel");
 const { sequelize } = require("../config/dbConnect");
@@ -11,7 +10,11 @@ const createOrder = async (userId, productId, quantity, paymentMethod) => {
   try {
     const product = await productModel.findByPk(productId);
     if (!product) throw new Error("Product not found");
-
+    if (product.stock < quantity) {
+      return res.status(400).json({
+        message: `Product is out of stock. Available stock: ${product.stock}`,
+      });
+    }
     const totalPrice = Number(product.price) * Number(quantity);
 
     const order = await orderModel.create(
@@ -42,9 +45,9 @@ const createOrder = async (userId, productId, quantity, paymentMethod) => {
       },
       { transaction }
     );
-
+    product.stock -= quantity;
+    await product.save();
     await transaction.commit();
-
     return { order, payment, orderItem };
   } catch (error) {
     await transaction.rollback();

@@ -54,11 +54,11 @@ const relations = async () => {
   cartItemsModel.belongsTo(productModel, { foreignKey: "productId" });
 
   orderItemsModel.hasMany(review, {
-    foreignKey: "id", // The foreign key in the Review model
+    foreignKey: "orderItemId", // The foreign key in the Review model
     as: "review", // Alias for the association
   });
   review.belongsTo(orderItemsModel, {
-    foreignKey: "id", // The foreign key in the Review model
+    foreignKey: "orderItemId", // The foreign key in the Review model
     as: "orderItem", // Alias for the association
   });
 };

@@ -1,24 +1,35 @@
 const reviewService = require("./reviewServices");
 const orderService = require("../order/orderService");
+const { message } = require("../order/orderSchema");
 
 // Create a review
 const createReview = async (req, res, next) => {
   const { productId, rating, comment, orderId } = req.body;
   const userId = req.userId; //auth
   try {
-    const createdreview = reviewService.createReview(
+    const createdreview = await reviewService.createReview(
       productId,
       rating,
       comment,
       orderId,
       userId
     );
-    res.status(200).json(createdreview);
+    res.status(200).json({ createdreview });
   } catch (error) {
     next(error);
   }
 };
 
+const getReviews = async (req, res, next) => {
+  const { productId } = req.body;
+
+  try {
+    const reviews = await reviewService.getReviews(productId);
+    res.status(200).json(reviews);
+  } catch (error) {
+    next(error);
+  }
+};
 // Update a review
 const updateReview = async (req, res, next) => {
   const reviewId = req.params.reviewId;
@@ -44,8 +55,8 @@ const updateReview = async (req, res, next) => {
 
 // Delete a review
 const deleteReview = async (req, res) => {
-  const reviewId = req.params.reviewId;
-  const userId = req.user.id;
+  const reviewId = req.body.reviewId;
+  const userId = req.userId;
 
   try {
     const deleted = await reviewService.deleteReview(reviewId, userId);
@@ -55,10 +66,10 @@ const deleteReview = async (req, res) => {
           "Review not found or you do not have permission to delete this review.",
       });
     }
-    res.status(204).json({ message: "deleted review" }); // No content to send back
+    res.status(200).json({ message: "deleted succesfully" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
 
-module.exports = { createReview, updateReview, deleteReview };
+module.exports = { createReview, getReviews, updateReview, deleteReview };
