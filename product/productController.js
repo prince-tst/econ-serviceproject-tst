@@ -1,5 +1,4 @@
 const productServies = require("./productServices");
-
 const addProduct = async (req, res, next) => {
   try {
     const productData = {

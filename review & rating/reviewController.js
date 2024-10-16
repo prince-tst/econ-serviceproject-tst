@@ -54,7 +54,7 @@ const updateReview = async (req, res, next) => {
 };
 
 // Delete a review
-const deleteReview = async (req, res) => {
+const deleteReview = async (req, res, next) => {
   const reviewId = req.body.reviewId;
   const userId = req.userId;
 
@@ -68,7 +68,7 @@ const deleteReview = async (req, res) => {
     }
     res.status(200).json({ message: "deleted succesfully" });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    next(error);
   }
 };
 

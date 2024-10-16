@@ -37,6 +37,15 @@ const relations = async () => {
   cartItemsModel.hasOne(orderItemsModel, { foreignKey: "cartItemId" });
   orderItemsModel.belongsTo(cartItemsModel, { foreignKey: "cartItemId" });
 
+  orderItemsModel.hasMany(review, {
+    foreignKey: "orderItemId",
+    as: "review",
+  });
+  review.belongsTo(orderItemsModel, {
+    foreignKey: "orderItemId",
+    as: "orderItem",
+  });
+
   // User and Order Associations
   userModel.hasMany(orderModel, { foreignKey: "userId" });
   orderModel.belongsTo(userModel, { foreignKey: "userId" });
@@ -52,14 +61,5 @@ const relations = async () => {
   // Product and CartItems Associations
   productModel.hasMany(cartItemsModel, { foreignKey: "productId" });
   cartItemsModel.belongsTo(productModel, { foreignKey: "productId" });
-
-  orderItemsModel.hasMany(review, {
-    foreignKey: "orderItemId", // The foreign key in the Review model
-    as: "review", // Alias for the association
-  });
-  review.belongsTo(orderItemsModel, {
-    foreignKey: "orderItemId", // The foreign key in the Review model
-    as: "orderItem", // Alias for the association
-  });
 };
 module.exports = relations;
