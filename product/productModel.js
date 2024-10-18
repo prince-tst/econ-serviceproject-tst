@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const { sequelize } = require("../config/dbConnect");
+
 const productModel = sequelize.define("product", {
   id: {
     type: DataTypes.INTEGER,
@@ -20,4 +21,5 @@ const productModel = sequelize.define("product", {
     allowNull: false,
   },
 });
+
 module.exports = productModel;

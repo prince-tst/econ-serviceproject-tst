@@ -1,16 +1,25 @@
-const redis = require("redis");
+const { createClient } = require("redis");
+//const { createOrSearchIndexRedis } = require("../product/productServices");
+const url = `redis://:@127.0.0.1:6379`; // local
+// const { cl } = require("../utils/service");
 
-const redisClient = redis.createClient({
-  host: "127.0.0.1", // Change if using a different host
-  port: 6379, // Default Redis port
+const redisClient = createClient({
+  url,
 });
 
-redisClient.on("connect", () => {
-  console.log("Connected to Redis...");
+// connect the redis
+(async function () {
+  await redisClient.connect();
+  //await createOrSearchIndexRedis();
+})();
+
+redisClient.on("ready", () => {
+  console.log("Redis connected successfully");
+  console.log("----> redis url:", url);
 });
 
 redisClient.on("error", (err) => {
-  console.error("Redis error:", err);
+  console.log("Error in Redis Connection", err);
 });
 
 module.exports = redisClient;
