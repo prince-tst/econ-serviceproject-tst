@@ -1,5 +1,5 @@
 const redisClient = require("../config/redisClient");
-const { categorySchema } = require("./redisSchemas");
+const { categorySchema } = require("../utils/redisSchemas");
 exports.setCategories = async (categories) => {
   const prefix = categorySchema.prefix; // Define a prefix for category keys
 
@@ -43,7 +43,7 @@ exports.getCategory = async (categoryId) => {
 
   return category; // Return the found category
 };
-exports.formatDataForRedis = async (category) => {
+exports.formatDataForRedis = (category) => {
   if (!category) return;
   const formatedData = {
     id: category.id,

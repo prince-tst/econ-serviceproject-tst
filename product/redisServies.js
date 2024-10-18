@@ -1,15 +1,15 @@
 const redisClient = require("../config/redisClient");
-const productModel = require("../product/productModel");
-const { productSchema } = require("./redisSchemas");
+const { productSchema } = require("../utils/redisSchemas");
 
 // Redis-related services
 exports.setProducts = async (products) => {
   const prefix = productSchema.prefix; // e.g., "product:"
   return Promise.all(
-    products.map((product) => {
+    products.map(async (product) => {
       let data = this.formatDataForRedis(product);
       // Store each product under a unique key based on its id
-      return redisClient.json.set(`${prefix}${product.id}`, "$", data);
+      console.log(data);
+      return await redisClient.json.set(`${prefix}${product.id}`, "$", data);
     })
   );
 };
@@ -61,7 +61,7 @@ exports.getProduct = async (productId) => {
     throw new Error("Redis fetch error");
   }
 };
-exports.formatDataForRedis = async (product) => {
+exports.formatDataForRedis = (product) => {
   if (!product) return;
   const formatedData = {
     id: product.id,

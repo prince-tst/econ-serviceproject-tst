@@ -1,4 +1,4 @@
-const redisServicesForCategory = require("../utils/redisServicesForCategory");
+const redisServicesForCategory = require("./redisServicesForCategory");
 const categoryModel = require("./categoryModel");
 
 // Service to add a new category
@@ -11,7 +11,7 @@ const addCategory = async (categoryData) => {
 // Service to get all categories
 const getCategories = async () => {
   const categories = await categoryModel.findAll();
-  await redisServicesForCategory.setCategories(categories);
+  //await redisServicesForCategory.setCategories(categories);
   return categories;
 };
 

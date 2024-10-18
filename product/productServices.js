@@ -2,7 +2,7 @@ const Model = require("./productModel");
 const redisClient = require("../config/redisClient");
 const { productSchema } = require("../utils/redisSchemas");
 const redisSchema = require("../utils/redisSchemas");
-const redisService = require("../utils/redisServies");
+const redisService = require("./redisServies");
 const productModel = require("./productModel");
 // Service to add a new product
 const addProductService = async (productData) => {
@@ -13,6 +13,7 @@ const addProductService = async (productData) => {
 // Service to get all products
 const getProductsService = async () => {
   try {
+    //find datafrom redis
     const products = await productModel.findAll();
     await redisService.setProducts(products);
     console.log("Data fetched from DB and stored in Redis.");
@@ -26,7 +27,7 @@ const getProductsService = async () => {
 // Service to update a product
 const updateProductService = async (productId, productData) => {
   const product = await Model.findByPk(productId);
-  await redisService.removeSingleProduct(product.id);
+  //await redisService.removeSingleProduct(product.id);
   if (!product) {
     throw new Error("Product not found");
   }
