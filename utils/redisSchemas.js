@@ -18,3 +18,18 @@ exports.productSchema = {
     },
   },
 };
+exports.categorySchema = {
+  index: "idx:category",
+  prefix: "category:",
+  schema: {
+    "$.id": {
+      type: "NUMERIC",
+      AS: "id",
+      SORTABLE: true,
+    },
+    "$.name": {
+      type: "TEXT",
+      AS: "name",
+    },
+  },
+};
