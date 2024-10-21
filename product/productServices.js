@@ -4,6 +4,7 @@ const { productSchema } = require("../utils/redisSchemas");
 const redisSchema = require("../utils/redisSchemas");
 const redisService = require("./redisServies");
 const productModel = require("./productModel");
+
 // Service to add a new product
 const addProductService = async (productData) => {
   const addedProduct = await Model.create(productData);
@@ -13,11 +14,17 @@ const addProductService = async (productData) => {
 // Service to get all products
 const getProductsService = async () => {
   try {
-    //find datafrom redis
-    const products = await productModel.findAll();
-    await redisService.setProducts(products);
-    console.log("Data fetched from DB and stored in Redis.");
-    return products;
+    let data = await redisService.getProducts();
+    if (data) {
+      console.log("from redis");
+    }
+    if (data.length == 0 || !data) {
+      console.log("from database");
+      const products = await productModel.findAll();
+      await redisService.setProducts(products);
+      return products;
+    }
+    return data;
   } catch (error) {
     console.log(error);
     throw new Error("Something went wrong");

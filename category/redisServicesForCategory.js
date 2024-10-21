@@ -43,6 +43,15 @@ exports.getCategory = async (categoryId) => {
 
   return category; // Return the found category
 };
+exports.getCategories = async () => {
+  const index = categorySchema.index; // Define a prefix for category keys
+
+  const categorys = await redisClient.ft.search(index, "*");
+
+  const fullDataOnly = categorys.documents.map((doc) => doc.value.fulldata);
+
+  return fullDataOnly; // Return the found category
+};
 exports.formatDataForRedis = (category) => {
   if (!category) return;
   const formatedData = {

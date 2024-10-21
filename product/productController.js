@@ -21,7 +21,7 @@ const getProducts = async (req, res, next) => {
   try {
     // Call the service function to get all products
     const products = await productServies.getProductsService();
-
+    
     return res.status(200).json({ products });
   } catch (err) {
     next(err);

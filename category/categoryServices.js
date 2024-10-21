@@ -10,9 +10,22 @@ const addCategory = async (categoryData) => {
 
 // Service to get all categories
 const getCategories = async () => {
-  const categories = await categoryModel.findAll();
-  //await redisServicesForCategory.setCategories(categories);
-  return categories;
+  try {
+    let data = await redisServicesForCategory.getCategories();
+    if (data) {
+      console.log("from redis");
+    }
+    if (data.length == 0 || !data) {
+      console.log("from database");
+      const categories = await categoryModel.findAll();
+      await redisServicesForCategory.setCategories(categories);
+      return categories;
+    }
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw new Error("Something went wrong");
+  }
 };
 
 // Service to update a category
