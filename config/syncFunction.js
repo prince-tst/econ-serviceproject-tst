@@ -35,11 +35,11 @@ const syncModels = async () => {
     await orderModel.sync({ force: false });
     console.log("Order model synchronized.");
 
-    await review.sync({ force: false });
-    console.log("rating and review model synchronized.");
-
     await orderItemsModel.sync({ force: false });
     console.log("OrderItems model synchronized.");
+    
+    await review.sync({ force: false });
+    console.log("rating and review model synchronized.");
 
     console.log("All models and associations have been successfully applied.");
   } catch (error) {

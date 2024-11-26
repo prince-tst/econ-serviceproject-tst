@@ -1,6 +1,6 @@
 const { createClient } = require("redis");
 //const { createOrSearchIndexRedis } = require("../product/productServices");
-const url = `redis://:@127.0.0.1:6379`; // local
+const url = `redis://@127.0.0.1:6379`; // local
 // const { cl } = require("../utils/service");
 
 const redisClient = createClient({
