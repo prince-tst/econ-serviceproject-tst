@@ -49,7 +49,7 @@ const loginUser = async (userName, userPassword) => {
   const token = jwt.sign(
     { id: loginuser.id, role: loginuser.role },
     process.env.JWT_SECRET,
-    { expiresIn: "5h" } // You can set token expiry as needed
+    { expiresIn: "365d" } // You can set token expiry as needed
   );
 
   // Return user and token
