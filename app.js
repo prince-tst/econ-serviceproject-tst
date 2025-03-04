@@ -12,6 +12,6 @@ const { createOrSearchIndexRedis } = require("./product/productServices");
 createOrSearchIndexRedis();
 relations();
 syncModels();
-app.use("/api", mainRoutes);
+app.use("/api/v1", mainRoutes);
 app.use(errorHandler);
 app.listen(port, () => console.log(`Server started on ${port}!`));
