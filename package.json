@@ -16,10 +16,13 @@
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "http-errors": "^2.0.0",
+    "ioredis": "^5.6.0",
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.11.0",
     "nodemon": "^3.1.4",
+    "pg": "^8.13.3",
+    "pg-hstore": "^2.3.4",
     "redis": "^4.7.0",
     "sequelize": "^6.37.4",
     "sequelize-redis": "^1.0.7"

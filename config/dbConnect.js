@@ -1,11 +1,20 @@
 const { Sequelize } = require("sequelize");
 
-const sequelize = new Sequelize("demo-tst", "devil", "Prince#0506", {
-  host: "localhost",
-  port: 3306,
-  dialect: "mysql",
+// const sequelize = new Sequelize("demo-tst", "devil", "Prince#0506", {
+//   host: "localhost",
+//   port: 3306,
+//   dialect: "mysql",
+// });
+const sequelize = new Sequelize(process.env.POSTGRES_URL, {
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Important for self-signed certificates
+    },
+  },
+  logging: false, // Disable SQL query logs (optional)
 });
-
 const dbConnection = async () => {
   try {
     await sequelize.authenticate();
