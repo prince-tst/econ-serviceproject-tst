@@ -15,7 +15,7 @@ router.post(
   validateRequest(productSchema),
   addProduct
 );
-router.get("/getproducts", authenticateJWT(), getProducts);
+router.get("/getproducts", getProducts);
 //router.patch("/updateproduct", updateProduct);
 router.delete("/deleteproduct", authenticateJWT(["admin"]), deleteProduct);
 module.exports = router;
