@@ -15,7 +15,7 @@ router.post(
   validateRequest(categorySchema),
   addCategory
 );
-router.get("/getcategorys", authenticateJWT(), getCategories);
+router.get("/getcategorys", getCategories);
 router.post(
   "/updatecategory",
   authenticateJWT(["admin"]),
