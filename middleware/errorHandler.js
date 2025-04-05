@@ -5,7 +5,6 @@ const errorHandler = (err, req, res, next) => {
   if (!err) {
     err = createError(500, "An unexpected error occurred");
   }
-  console.log("HEY", err);
   if (err.name === "ValidationError") {
     res.status(400).json({
       status: 400,
