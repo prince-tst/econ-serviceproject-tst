@@ -10,11 +10,11 @@ const sequelize = new Sequelize(process.env.POSTGRES_URL, {
   dialectOptions: {
     ssl: {
       require: true,
-      rejectUnauthorized: false, // Important for self-signed certificates
+      rejectUnauthorized: false, // only use this for development!
     },
   },
-  logging: false, // Disable SQL query logs (optional)
 });
+
 const dbConnection = async () => {
   try {
     await sequelize.authenticate();

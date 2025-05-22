@@ -1,4 +1,5 @@
 const { createClient } = require("redis");
+require("dotenv").config();
 //const { createOrSearchIndexRedis } = require("../product/productServices");
 const url = process.env.REDIS_URL; // local
 // const { cl } = require("../utils/service");
